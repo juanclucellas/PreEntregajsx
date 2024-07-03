@@ -1,0 +1,24 @@
+.barra-navegacion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  .marca-navegacion {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .menu-navegacion {
+    display: flex;
+    align-items: center;
+  }
+  
+  .elemento-navegacion {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #000;
+  }
+  
