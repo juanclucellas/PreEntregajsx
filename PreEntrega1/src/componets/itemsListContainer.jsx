@@ -1,17 +1,36 @@
-import React from 'react';
 
-const ItemListContainer = ({ greeting }) => {
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+const ItemsListContainer = ({ greeting }) => {
+  const { categoryId } = useParams();
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetchItemsByCategory(categoryId).then(data => setItems(data));
+  }, [categoryId]);
+
   return (
-    <div style={{ 
-      padding: '20px', 
-      marginTop: '20px', 
-      border: '1px solid #ddd', 
-      borderRadius: '5px', 
-      backgroundColor: '#f9f9f9' 
-    }}>
-      <h1 style={{ margin: '0', fontSize: '24px', color: '#333' }}>{greeting}</h1>
+    <div>
+      <h1>{greeting}</h1>
+      <ul>
+        {items.map(item => (
+          <li key={item.id}>
+            <a href={`/item/${item.id}`}>{item.name}</a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default ItemListContainer;
+const fetchItemsByCategory = async (categoryId) => {
+  // Simulación de fetch
+  const allItems = [
+    { id: '1', name: 'ElfBar', category: 'vape-elfbar' },
+    { id: '2', name: 'IGNITE', category: 'vape-ignite' },
+  ];
+  return categoryId ? allItems.filter(item => item.category === categoryId) : allItems;
+};
+
+export default ItemsListContainer;

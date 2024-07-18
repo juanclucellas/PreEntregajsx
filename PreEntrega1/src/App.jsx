@@ -1,15 +1,24 @@
 
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './componets/NavBar';
-import ItemListContainer from './componets/ItemsListContainer'; 
-
+import ItemsListContainer from './componets/ItemsListContainer';
+import ItemDetailContainer from './componets/ItemDetailContainer';
+import Catalogo from './componets/Catalogo';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <ItemListContainer greeting="Bienvenido a The Vape Store"/>
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<ItemsListContainer greeting="Bienvenido a iVape!" />} />
+          <Route path="/category/:categoryId" element={<ItemsListContainer />} />
+          <Route path="/item/:id" element={<ItemDetailContainer />} />
+          <Route path="/catalogo" element={<Catalogo />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
