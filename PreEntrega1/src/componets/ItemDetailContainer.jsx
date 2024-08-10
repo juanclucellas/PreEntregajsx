@@ -1,35 +1,47 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ItemDetail from './ItemDetail';
+import ItemQuaintySelector from './ItemQuaintySelector';
+import Description from './Description';
+import AddItemButton from './AddItemButton';
 
 const ItemDetailContainer = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    fetchItemById(id).then(data => setItem(data));
+    // Simulación de obtener datos del producto
+    const fetchItem = async () => {
+      const data = {
+        id: '1',
+        name: 'ElfBar Blueberry Ice',
+        description: 'Un vape con sabor refrescante a arándano.',
+        stock: 10,
+        price: 15.0,
+      };
+      setItem(data);
+    };
+
+    fetchItem();
   }, [id]);
+
+  const handleAddToCart = (quantity) => {
+    console.log(`Agregado al carrito: ${quantity} unidades de ${item.name}`);
+  };
 
   return (
     <div>
-      {item ? (
+      {item && (
         <>
-          <h1>{item.name}</h1>
-          <p>{item.description}</p>
+          <ItemDetail item={item} />
+          <Description text={item.description} />
+          <ItemQuantitySelector stock={item.stock} initial={1} onAdd={handleAddToCart} />
+          <AddItemButton onAdd={() => handleAddToCart(1)} />
         </>
-      ) : (
-        <p>Cargando...</p>
       )}
     </div>
   );
-};
-
-const fetchItemById = async (id) => {
-  // Simulación de fetch
-  const items = [
-    { id: '1', name: 'Vape ElfBar', description: 'Vape ElfBar 10.000 pufs' },
-    { id: '2', name: 'Vape IGNITE', description: 'Vape IGNITE 5.000, 8.000 y 10.000 pufs' },
-  ];
-  return items.find(item => item.id === id);
 };
 
 export default ItemDetailContainer;
